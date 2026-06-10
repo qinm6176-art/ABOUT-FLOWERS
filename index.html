@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ABOUT FLOWERS</title>
+    <link rel="stylesheet" href="style.css?v=37" />
+  </head>
+  <body>
+    <header class="top-nav" aria-label="Primary navigation">
+      <a class="nav-logo" href="#" aria-label="FLOWERS home">FLOWERS</a>
+      <nav class="nav-links" aria-label="Sections">
+        <a class="nav-link is-active" href="#">HOME</a>
+        <a class="nav-link" href="#">STORIES</a>
+        <a class="nav-link" href="#">ABOUT</a>
+      </nav>
+      <a class="nav-link nav-link-plants" href="#">PLANTS</a>
+      <a class="bottom-discover" href="#">DISCOVER</a>
+      <button class="menu-button" type="button" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </header>
+
+    <main class="stage" aria-label="ABOUT FLOWERS homepage">
+      <div class="background-layer" aria-hidden="true"></div>
+      <img class="black-flower" src="assets/black-flower.png" alt="Black aquilegia flower" />
+      <img class="epiphyllum-flower" src="assets/epiphyllum-flower.png" alt="Epiphyllum flower" />
+      <img class="peony-flower" src="assets/peony-flower.png" alt="Peony flower" />
+      <img class="rose-flower" src="assets/rose-flower.png" alt="Rose flower" />
+      <img class="dandelion-flower" src="assets/dandelion-flower.png" alt="Dandelion flower" />
+
+      <section class="copy" aria-label="Flower introduction">
+        <h1>FLOWERS</h1>
+        <p class="script-title" aria-label="About Aquilegia"></p>
+      </section>
+
+      <svg class="ribbon-line" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+        <path
+          class="ribbon-shadow"
+          d="M -60 552 C 105 487 285 452 382 475 C 438 488 418 560 426 583 C 455 658 664 619 804 540 C 912 479 998 420 1070 515 C 1138 604 1326 595 1510 535 C 1585 510 1570 547 1528 584 C 1662 525 1816 444 1980 340"
+        />
+        <path
+          class="ribbon-stroke"
+          d="M -60 552 C 105 487 285 452 382 475 C 438 488 418 560 426 583 C 455 658 664 619 804 540 C 912 479 998 420 1070 515 C 1138 604 1326 595 1510 535 C 1585 510 1570 547 1528 584 C 1662 525 1816 444 1980 340"
+        />
+      </svg>
+
+      <section class="detail-scene" aria-label="Black pansy detail">
+        <div class="detail-video-wrap">
+          <video
+            class="detail-video"
+            src="assets/flower-video.webm"
+            muted
+            playsinline
+            preload="auto"
+          ></video>
+        </div>
+        <div class="detail-text" aria-live="polite"></div>
+      </section>
+
+      <section class="epiphyllum-scene" aria-label="Epiphyllum dusk transition">
+        <img class="epiphyllum-fallback" src="assets/epiphyllum-bg.png" alt="Epiphyllum background" />
+        <p class="epiphyllum-text" aria-live="polite"></p>
+      </section>
+
+      <section class="peony-scene" aria-label="Relief peony">
+        <p class="peony-text" aria-live="polite"></p>
+        <div class="peony-art" tabindex="0" aria-label="Embossed peony with metallic hover effect">
+          <div class="peony-webgl" aria-hidden="true"></div>
+          <img class="peony-image peony-embossed" src="assets/peony-embossed.png" alt="Embossed peony" />
+          <div class="peony-metal-mask" aria-hidden="true">
+            <img class="peony-image peony-metal" src="assets/peony-metal-relief.png?v=25" alt="" />
+          </div>
+        </div>
+      </section>
+
+      <section class="rose-scene" aria-label="Rose">
+        <img class="rose-background" src="assets/rose-bg.png" alt="Rose background" />
+        <p class="rose-text" aria-live="polite"></p>
+      </section>
+
+      <section class="dandelion-scene" aria-label="Dandelion">
+        <img class="dandelion-background" src="assets/dandelion-bg.png" alt="Dandelion background" />
+        <p class="dandelion-text" aria-live="polite"></p>
+      </section>
+
+      <section class="ending-scene" aria-label="Flowers ending">
+        <img class="ending-background" src="assets/ending-bg.png" alt="Flowers ending background" />
+        <h2 class="ending-title" aria-label="FLOWERS"></h2>
+      </section>
+    </main>
+
+    <div class="cursor-trail" aria-hidden="true"></div>
+
+    <script src="script.js?v=37"></script>
+  </body>
+</html>

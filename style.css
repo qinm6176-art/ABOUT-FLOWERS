@@ -1,0 +1,1996 @@
+@font-face {
+  font-family: "Jinmei Maokai";
+  src: url("fonts/jinmei-maokai.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Breathing Personal Use";
+  src: url("fonts/Breathing.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Han Sans CN";
+  src: url("fonts/SourceHanSansCN-Medium.otf") format("opentype");
+  font-display: swap;
+}
+
+:root {
+  --fade-duration: 2.18s;
+  --write-delay: 2.55s;
+  --flower-left: 50%;
+  --flower-top: 69.5%;
+  --flower-width: clamp(74px, 6.1vw, 118px);
+  --detail-bg: #ededeb;
+  --detail-progress: 0;
+  --detail-enter-x: 0vw;
+  --detail-enter-y: 0vh;
+  --detail-flower-x: 41.65vw;
+  --detail-flower-y: 23.8vh;
+  --detail-flower-rotate: -145deg;
+  --detail-flower-scale: 0.74;
+  --detail-copy-y: 0vh;
+  --detail-ribbon-y: 0vh;
+  --epiphyllum-progress: 0;
+  --peony-progress: 0;
+  --rose-progress: 0;
+  --morph-left: 8.35%;
+  --morph-top: 45.7%;
+  --morph-x: 0vw;
+  --morph-y: 0vh;
+  --morph-rotate: 0deg;
+  --morph-scale: 1;
+  --black-morph-opacity: 1;
+  --epiphyllum-flower-opacity: 0;
+  --peony-morph-x: 0vw;
+  --peony-morph-y: 0vh;
+  --peony-morph-rotate: 0deg;
+  --peony-morph-scale: 1;
+  --epiphyllum-to-peony-opacity: 1;
+  --peony-flower-opacity: 0;
+  --rose-morph-x: 0vw;
+  --rose-morph-y: 0vh;
+  --rose-morph-arc: 0vh;
+  --rose-morph-rotate: 0deg;
+  --rose-morph-scale: 1;
+  --peony-to-rose-opacity: 1;
+  --rose-flower-opacity: 0;
+  --dandelion-progress: 0;
+  --dandelion-morph-x: 0vw;
+  --dandelion-morph-y: 0vh;
+  --dandelion-morph-arc: 0vh;
+  --dandelion-morph-rotate: 0deg;
+  --dandelion-morph-scale: 1;
+  --rose-to-dandelion-opacity: 1;
+  --dandelion-flower-opacity: 0;
+  --ending-progress: 0;
+  --ending-flower-x: 38vw;
+  --ending-flower-y: -38vh;
+  --ending-flower-rotate: 0deg;
+  --ending-flower-scale: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  background: #ededed;
+  color: #f3f1e8;
+}
+
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 100%;
+  height: 100%;
+  padding: 31px 50px;
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.nav-logo,
+.nav-link,
+.bottom-discover,
+.menu-button {
+  pointer-events: auto;
+}
+
+.nav-logo {
+  position: absolute;
+  left: 50px;
+  top: 31px;
+  color: currentColor;
+  font-family: "Jinmei Maokai", "Times New Roman", serif;
+  font-size: clamp(21px, 1.55vw, 30px);
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  position: absolute;
+  top: 31px;
+  left: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(82px, 1fr));
+  width: min(640px, 38vw);
+  min-width: 430px;
+  transform: translateX(-50%);
+}
+
+.nav-link {
+  position: relative;
+  justify-self: center;
+  padding: 5px 0 18px;
+  color: rgba(255, 255, 255, 0.48);
+  font-family: "Microsoft YaHei", "Microsoft Yahei", "Segoe UI", Arial, sans-serif;
+  font-size: clamp(13px, 0.95vw, 18px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.28s ease;
+}
+
+.nav-link-plants {
+  position: fixed;
+  top: 31px;
+  right: 50px;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transform: translateX(-50%) scale(0.4);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible,
+.nav-link.is-active {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after,
+.nav-link.is-active::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.menu-button {
+  position: fixed;
+  right: 50px;
+  bottom: 31px;
+  display: inline-grid;
+  gap: 5px;
+  width: 28px;
+  padding: 0;
+  border: 0;
+  margin-top: 0;
+  color: currentColor;
+  background: transparent;
+  opacity: 1;
+}
+
+.menu-button span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.bottom-discover {
+  position: fixed;
+  left: 50px;
+  bottom: 31px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Microsoft YaHei", "Microsoft Yahei", "Segoe UI", Arial, sans-serif;
+  font-size: clamp(13px, 0.95vw, 18px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.28s ease;
+}
+
+.bottom-discover:hover,
+.bottom-discover:focus-visible {
+  color: #ffffff;
+}
+
+.cursor-trail {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.trail-flower {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--trail-flower-width, clamp(48px, 6.2vw, 116px));
+  height: auto;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: 50% 50%;
+  filter: var(--trail-flower-shadow, drop-shadow(0 10px 18px rgba(0, 0, 0, 0.22)));
+  will-change: transform, opacity;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 420px;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  background: #020303;
+  touch-action: manipulation;
+}
+
+.stage.revealed {
+  background: #ededed;
+}
+
+.stage.to-detail,
+.stage.detail,
+.stage.to-epiphyllum,
+.stage.epiphyllum,
+.stage.to-peony,
+.stage.peony,
+.stage.to-rose,
+.stage.rose,
+.stage.to-dandelion,
+.stage.dandelion,
+.stage.to-ending,
+.stage.ending {
+  cursor: default;
+  background: var(--detail-bg);
+}
+
+.stage.to-detail .background-layer,
+.stage.detail .background-layer,
+.stage.to-epiphyllum .background-layer,
+.stage.epiphyllum .background-layer,
+.stage.to-peony .background-layer,
+.stage.peony .background-layer,
+.stage.to-rose .background-layer,
+.stage.rose .background-layer,
+.stage.to-dandelion .background-layer,
+.stage.dandelion .background-layer,
+.stage.to-ending .background-layer,
+.stage.ending .background-layer {
+  clip-path: circle(0 at var(--flower-left) var(--flower-top));
+  opacity: 0;
+  animation: none;
+}
+
+.background-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.background-layer {
+  z-index: 1;
+  background-image: url("背景.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  clip-path: circle(66vmax at var(--flower-left) var(--flower-top));
+  opacity: 1;
+  transform: translateZ(0);
+  will-change: clip-path;
+}
+
+.background-layer {
+  background-image: url("assets/background.png");
+}
+
+.black-flower {
+  position: absolute;
+  z-index: 3;
+  left: var(--flower-left);
+  top: var(--flower-top);
+  width: var(--flower-width);
+  height: auto;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.28));
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: transform, opacity;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 0.72, 0.18, 1),
+    opacity 0.18s ease;
+}
+
+.epiphyllum-flower {
+  position: absolute;
+  z-index: 8;
+  left: var(--morph-left);
+  top: var(--morph-top);
+  width: clamp(88px, 7vw, 136px);
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.42));
+  transform:
+    translate(-50%, -50%)
+    translate(var(--morph-x), var(--morph-y))
+    rotate(var(--morph-rotate))
+    scale(var(--morph-scale));
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 0.72, 0.18, 1),
+    opacity 0.18s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.peony-flower {
+  position: absolute;
+  z-index: 8;
+  left: 90.7%;
+  top: 51.2%;
+  width: clamp(82px, 6.6vw, 132px);
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.18));
+  transform:
+    translate(-50%, -50%)
+    translate(var(--peony-morph-x), var(--peony-morph-y))
+    rotate(var(--peony-morph-rotate))
+    scale(var(--peony-morph-scale));
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 0.72, 0.18, 1),
+    opacity 0.18s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.rose-flower {
+  position: absolute;
+  z-index: 9;
+  left: 50%;
+  top: 39.5%;
+  width: clamp(96px, 7.4vw, 154px);
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.32));
+  transform:
+    translate(-50%, -50%)
+    translate(var(--rose-morph-x), calc(var(--rose-morph-y) + var(--rose-morph-arc)))
+    rotate(var(--rose-morph-rotate))
+    scale(var(--rose-morph-scale));
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 0.72, 0.18, 1),
+    opacity 0.18s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.dandelion-flower {
+  position: absolute;
+  z-index: 9;
+  left: 50%;
+  top: 91%;
+  width: clamp(96px, 7.5vw, 158px);
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.12));
+  transform:
+    translate(-50%, -50%)
+    translate(var(--dandelion-morph-x), calc(var(--dandelion-morph-y) + var(--dandelion-morph-arc)))
+    rotate(var(--dandelion-morph-rotate))
+    scale(var(--dandelion-morph-scale));
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  transition:
+    transform 0.18s cubic-bezier(0.22, 0.72, 0.18, 1),
+    opacity 0.18s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.stage.detail .black-flower {
+  left: 8.35%;
+  top: 45.7%;
+  width: clamp(82px, 6.1vw, 120px);
+  opacity: 1;
+  transform:
+    translate(calc(-50% + var(--detail-flower-x)), calc(-50% + var(--detail-flower-y)))
+    rotate(var(--detail-flower-rotate))
+    scale(var(--detail-flower-scale));
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.14));
+}
+
+.stage.to-detail .black-flower {
+  left: var(--flower-left);
+  top: var(--flower-top);
+  width: clamp(82px, 6.1vw, 120px);
+  opacity: 1;
+  transform:
+    translate(-50%, -50%)
+    translate(var(--detail-enter-x), var(--detail-enter-y))
+    scale(var(--detail-flower-scale));
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.14));
+}
+
+.stage.detail.flower-dropped .black-flower {
+  animation: none;
+}
+
+.copy {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 49%;
+  width: min(70vw, 1060px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  gap: 0.105em;
+  margin: 0;
+  font-family: "Jinmei Maokai", "Bodoni 72", "Didot", "Times New Roman", serif;
+  font-size: clamp(78px, 12.5vw, 218px);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.97);
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 5px 24px rgba(0, 0, 0, 0.68);
+}
+
+h1 span {
+  display: block;
+}
+
+h1 span:nth-child(4) {
+  margin-right: 0.22em;
+}
+
+.ribbon-line {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.ribbon-line path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: var(--ribbon-length, 1);
+  stroke-dashoffset: var(--ribbon-length, 1);
+}
+
+.ribbon-shadow {
+  display: none;
+}
+
+.ribbon-stroke {
+  stroke: rgba(255, 18, 9, 0.96);
+  stroke-width: 5.6;
+}
+
+.script-title {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: max-content;
+  max-width: 88vw;
+  min-height: clamp(54px, 8vw, 118px);
+  margin: 0;
+  font-family: "Breathing Personal Use", "Segoe Script", "Brush Script MT", cursive;
+  font-size: clamp(46px, 5.4vw, 104px);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: 0;
+  color: #020202;
+  text-align: center;
+  text-shadow: none;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.script-title span {
+  display: inline-block;
+  min-width: 0.18em;
+  opacity: 0;
+  transform: translateX(-0.22em) translateY(0.05em);
+  filter: blur(5px);
+}
+
+.detail-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(180px, 25vw) minmax(420px, 44vw) minmax(220px, 21vw);
+  align-items: center;
+  gap: 0;
+  padding: 0 5vw;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(105vh);
+  will-change: transform, opacity;
+}
+
+.detail-video-wrap {
+  grid-column: 2;
+  align-self: end;
+  justify-self: center;
+  width: min(43vw, 710px);
+  height: min(90vh, 960px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible;
+}
+
+.detail-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform: translateX(-2.4%);
+}
+
+.detail-text {
+  position: absolute;
+  right: 4.2%;
+  top: 45.7%;
+  width: min(18.5vw, 330px);
+  min-height: 280px;
+  color: rgba(8, 8, 8, 0.9);
+  font-family: "Source Han Sans CN", "Microsoft YaHei", "Microsoft Yahei", sans-serif;
+  font-size: clamp(9px, 0.52vw, 10.5px);
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: 0.035em;
+  text-align: right;
+  transform: translateY(-50%);
+  perspective: 900px;
+}
+
+.epiphyllum-text {
+  position: absolute;
+  z-index: 7;
+  left: 5.2%;
+  top: 45.2%;
+  width: min(17vw, 318px);
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-family: "Source Han Sans CN", "Microsoft YaHei", "Microsoft Yahei", sans-serif;
+  font-size: clamp(8.5px, 0.5vw, 10px);
+  font-weight: 400;
+  line-height: 1.58;
+  letter-spacing: 0.04em;
+  text-align: left;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(42px) rotateX(-10deg) scaleY(1.28);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  perspective: 900px;
+  transition:
+    opacity 0.88s ease,
+    filter 0.88s ease,
+    transform 0.98s cubic-bezier(0.22, 0.72, 0.18, 1);
+  will-change: opacity, transform, filter;
+}
+
+.peony-text {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  top: 53.5%;
+  width: min(21vw, 390px);
+  margin: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-family: "Source Han Sans CN", "Microsoft YaHei", "Microsoft Yahei", sans-serif;
+  font-size: clamp(8.5px, 0.5vw, 10px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.035em;
+  text-align: center;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate(-50%, 34px) rotateX(-8deg) scaleY(1.24);
+  transform-origin: 50% 0%;
+  pointer-events: none;
+  perspective: 900px;
+  transition:
+    opacity 0.88s ease,
+    filter 0.88s ease,
+    transform 0.98s cubic-bezier(0.22, 0.72, 0.18, 1);
+  will-change: opacity, transform, filter;
+}
+
+.peony-text.is-active {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate(-50%, 0) rotateX(0deg) scaleY(1);
+}
+
+.peony-text .float-char {
+  opacity: 0;
+}
+
+.peony-text.is-active .float-char {
+  opacity: 1;
+}
+
+.rose-text {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  top: 72.8%;
+  width: min(18vw, 330px);
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: "Source Han Sans CN", "Microsoft YaHei", "Microsoft Yahei", sans-serif;
+  font-size: clamp(8px, 0.48vw, 9.8px);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.035em;
+  text-align: center;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate(-50%, 34px) rotateX(-8deg) scaleY(1.24);
+  transform-origin: 50% 0%;
+  pointer-events: none;
+  perspective: 900px;
+  transition:
+    opacity 0.88s ease,
+    filter 0.88s ease,
+    transform 0.98s cubic-bezier(0.22, 0.72, 0.18, 1);
+  will-change: opacity, transform, filter;
+}
+
+.rose-text.is-active {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate(-50%, 0) rotateX(0deg) scaleY(1);
+}
+
+.rose-text .float-char {
+  opacity: 0;
+}
+
+.rose-text.is-active .float-char {
+  opacity: 1;
+}
+
+.dandelion-text {
+  position: absolute;
+  z-index: 7;
+  left: 59.2%;
+  top: 46.4%;
+  width: min(20vw, 360px);
+  margin: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-family: "Source Han Sans CN", "Microsoft YaHei", "Microsoft Yahei", sans-serif;
+  font-size: clamp(8px, 0.48vw, 9.8px);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.035em;
+  text-align: left;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(34px) rotateX(-8deg) scaleY(1.24);
+  transform-origin: 50% 0%;
+  pointer-events: none;
+  perspective: 900px;
+  transition:
+    opacity 0.88s ease,
+    filter 0.88s ease,
+    transform 0.98s cubic-bezier(0.22, 0.72, 0.18, 1);
+  will-change: opacity, transform, filter;
+}
+
+.dandelion-text.is-active {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) rotateX(0deg) scaleY(1);
+}
+
+.dandelion-text .float-char {
+  opacity: 0;
+}
+
+.dandelion-text.is-active .float-char {
+  opacity: 1;
+}
+
+.ending-title {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  gap: 0.105em;
+  width: min(72vw, 1100px);
+  margin: 0;
+  color: rgba(255, 255, 255, 0.97);
+  font-family: "Jinmei Maokai", "Bodoni 72", "Didot", "Times New Roman", serif;
+  font-size: clamp(78px, 12.5vw, 218px);
+  font-weight: 400;
+  line-height: 0.86;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 5px 24px rgba(0, 0, 0, 0.68);
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate(-50%, calc(-50% + 34px)) rotateX(-8deg) scaleY(1.24);
+  transform-origin: 50% 0%;
+  pointer-events: none;
+  perspective: 900px;
+  transition:
+    opacity 0.88s ease,
+    filter 0.88s ease,
+    transform 0.98s cubic-bezier(0.22, 0.72, 0.18, 1);
+  will-change: opacity, transform, filter;
+}
+
+.ending-title.is-active {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate(-50%, -50%) rotateX(0deg) scaleY(1);
+}
+
+.ending-title .float-char {
+  display: inline-block;
+  opacity: 0;
+}
+
+.ending-title.is-active .float-char {
+  opacity: 1;
+}
+
+.epiphyllum-text.is-active {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) rotateX(0deg) scaleY(1);
+}
+
+.epiphyllum-text .float-char {
+  opacity: 0;
+}
+
+.epiphyllum-text.is-active .float-char {
+  opacity: 1;
+}
+
+.life-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  filter: blur(10px);
+  clip-path: inset(48% 0 48% 0);
+  transform: translateY(34px) rotateX(-8deg) scale(0.985);
+  transform-origin: 50% 100%;
+  transition:
+    opacity 0.88s ease,
+    filter 0.88s ease,
+    clip-path 0.98s cubic-bezier(0.22, 0.72, 0.18, 1),
+    transform 0.98s cubic-bezier(0.22, 0.72, 0.18, 1);
+  will-change: opacity, transform, filter, clip-path;
+}
+
+.life-text.is-active {
+  opacity: 1;
+  filter: blur(0);
+  clip-path: inset(0 0 0 0);
+  transform: translateY(0) rotateX(0deg) scale(1);
+}
+
+.life-text.is-leaving {
+  opacity: 0;
+  filter: blur(8px);
+  clip-path: inset(0 0 72% 0);
+  transform: translateY(-58px) rotateX(13deg) scale(0.99);
+  transform-origin: 50% 0;
+}
+
+.life-text strong {
+  font-weight: 700;
+}
+
+.life-text-inner {
+  display: block;
+}
+
+.float-char {
+  display: inline-block;
+  opacity: 0;
+  transform-origin: 50% 0%;
+  will-change: opacity, transform;
+}
+
+.life-text.is-active .float-char {
+  opacity: 1;
+}
+
+.epiphyllum-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(105vh);
+  transition: transform 0.52s cubic-bezier(0.22, 0.72, 0.18, 1);
+  background: #111826;
+  will-change: transform, opacity;
+}
+
+.epiphyllum-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.epiphyllum-fallback {
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  filter: saturate(0.98) contrast(1.04);
+}
+
+.peony-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(105vh);
+  transition: transform 0.52s cubic-bezier(0.22, 0.72, 0.18, 1);
+  will-change: transform, opacity;
+}
+
+.rose-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(105vh);
+  transition: transform 0.62s cubic-bezier(0.22, 0.72, 0.18, 1);
+  background: #010101;
+  will-change: transform, opacity;
+}
+
+.rose-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0.95;
+  filter: contrast(1.06) saturate(1.05) brightness(0.82);
+  transform: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.dandelion-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(105vh);
+  transition: transform 0.62s cubic-bezier(0.22, 0.72, 0.18, 1);
+  background: #efeeee;
+  will-change: transform, opacity;
+}
+
+.dandelion-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 1;
+  filter: contrast(1.02) saturate(0.98) brightness(1.02);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.ending-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(105vh);
+  transition: transform 0.66s cubic-bezier(0.22, 0.72, 0.18, 1);
+  background: #030303;
+  will-change: transform, opacity;
+}
+
+.ending-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 1;
+  filter: contrast(1.02) saturate(1.02) brightness(0.92);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.peony-art {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  cursor: pointer;
+  outline: none;
+  transform: none;
+  filter: none;
+}
+
+.peony-webgl {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.peony-webgl canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.peony-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 0.72, 0.18, 1),
+    filter 0.9s cubic-bezier(0.22, 0.72, 0.18, 1),
+    transform 0.9s cubic-bezier(0.22, 0.72, 0.18, 1);
+}
+
+.peony-art.webgl-ready .peony-webgl {
+  opacity: 1;
+}
+
+.peony-art.webgl-ready .peony-image {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.peony-art.webgl-ready:hover .peony-embossed,
+.peony-art.webgl-ready:focus-visible .peony-embossed,
+.peony-art.webgl-ready:hover .peony-metal,
+.peony-art.webgl-ready:focus-visible .peony-metal,
+.peony-art.webgl-ready .peony-metal-mask {
+  opacity: 0;
+  transform: none;
+  filter: none;
+}
+
+.peony-art.webgl-ready::after {
+  display: none;
+}
+
+.peony-embossed {
+  opacity: 1;
+  filter: saturate(0.88) contrast(1.02);
+}
+
+.peony-metal {
+  opacity: 0;
+  filter: saturate(1.18) contrast(1.12) brightness(1.04);
+  transform: scale(1.006);
+}
+
+.peony-metal-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.peony-metal-mask .peony-metal {
+  z-index: 1;
+}
+
+.peony-art::after {
+  content: "";
+  position: absolute;
+  inset: 8% 6%;
+  z-index: 3;
+  border-radius: 50%;
+  background: linear-gradient(
+    105deg,
+    transparent 26%,
+    rgba(255, 255, 255, 0.04) 39%,
+    rgba(255, 248, 220, 0.42) 48%,
+    rgba(255, 255, 255, 0.08) 58%,
+    transparent 72%
+  );
+  opacity: 0;
+  mix-blend-mode: screen;
+  transform: translateX(-64%) rotate(-7deg);
+  transition:
+    opacity 0.42s ease,
+    transform 1.15s cubic-bezier(0.2, 0.72, 0.12, 1);
+  pointer-events: none;
+}
+
+.peony-art.fallback-metal .peony-embossed {
+  opacity: 1;
+}
+
+.peony-art.fallback-metal .peony-metal-mask {
+  opacity: 1;
+}
+
+.peony-art.fallback-metal .peony-metal {
+  opacity: 0;
+  filter: saturate(1.12) contrast(1.2) brightness(1.04);
+  transform: none;
+  transition: opacity 0.28s ease;
+  -webkit-mask-image: radial-gradient(
+    ellipse 21vw 15.2vw at var(--mx, 50%) var(--my, 50%),
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.62) 22%,
+    rgba(0, 0, 0, 0.24) 55%,
+    rgba(0, 0, 0, 0.04) 82%,
+    transparent 100%
+  ),
+  radial-gradient(
+    ellipse 17.5vw 11.8vw at var(--mx1, 50%) var(--my1, 50%),
+    rgba(0, 0, 0, 0.38) 0%,
+    rgba(0, 0, 0, 0.16) 48%,
+    transparent 100%
+  ),
+  radial-gradient(
+    ellipse 14vw 9vw at var(--mx2, 50%) var(--my2, 50%),
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.08) 52%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 21vw 15.2vw at var(--mx, 50%) var(--my, 50%),
+    rgba(0, 0, 0, 0.88) 0%,
+    rgba(0, 0, 0, 0.62) 22%,
+    rgba(0, 0, 0, 0.24) 55%,
+    rgba(0, 0, 0, 0.04) 82%,
+    transparent 100%
+  ),
+  radial-gradient(
+    ellipse 17.5vw 11.8vw at var(--mx1, 50%) var(--my1, 50%),
+    rgba(0, 0, 0, 0.38) 0%,
+    rgba(0, 0, 0, 0.16) 48%,
+    transparent 100%
+  ),
+  radial-gradient(
+    ellipse 14vw 9vw at var(--mx2, 50%) var(--my2, 50%),
+    rgba(0, 0, 0, 0.2) 0%,
+    rgba(0, 0, 0, 0.08) 52%,
+    transparent 100%
+  );
+}
+
+.peony-art.fallback-metal.is-hovering .peony-metal,
+.peony-art.fallback-metal:focus-visible .peony-metal {
+  opacity: 0.96;
+}
+
+.peony-art.fallback-metal::after {
+  display: none;
+}
+
+body.is-peony .cursor-trail,
+body.is-peony-transition .cursor-trail,
+body.is-epiphyllum .cursor-trail,
+body.is-epiphyllum-transition .cursor-trail {
+  display: none;
+}
+
+body.is-rose .cursor-trail,
+body.is-rose-transition .cursor-trail,
+body.is-dandelion .cursor-trail,
+body.is-dandelion-transition .cursor-trail,
+body.is-ending .cursor-trail,
+body.is-ending-transition .cursor-trail {
+  display: block;
+}
+
+.stage.to-detail .copy {
+  opacity: calc(1 - var(--detail-progress));
+  transform: translate(-50%, calc(-50% + var(--detail-copy-y)));
+}
+
+.stage.to-detail .ribbon-line {
+  display: block;
+  opacity: calc(1 - var(--detail-progress));
+  animation: none !important;
+  transform: translateY(var(--detail-ribbon-y));
+}
+
+.stage.detail .copy,
+.stage.detail .ribbon-line,
+.stage.to-epiphyllum .copy,
+.stage.to-epiphyllum .ribbon-line,
+.stage.epiphyllum .copy,
+.stage.epiphyllum .ribbon-line,
+.stage.to-peony .copy,
+.stage.to-peony .ribbon-line,
+.stage.peony .copy,
+.stage.peony .ribbon-line,
+.stage.to-rose .copy,
+.stage.to-rose .ribbon-line,
+.stage.rose .copy,
+.stage.rose .ribbon-line,
+.stage.to-dandelion .copy,
+.stage.to-dandelion .ribbon-line,
+.stage.dandelion .copy,
+.stage.dandelion .ribbon-line,
+.stage.to-ending .copy,
+.stage.to-ending .ribbon-line,
+.stage.ending .copy,
+.stage.ending .ribbon-line {
+  display: none;
+  opacity: 0;
+  animation: none !important;
+}
+
+.stage.detail .script-title span {
+  animation: none;
+}
+
+.stage.to-detail .detail-scene {
+  opacity: var(--detail-progress);
+  transform: translateY(calc((1 - var(--detail-progress)) * 105vh));
+}
+
+.stage.detail .detail-scene {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.35s ease;
+}
+
+.stage.to-epiphyllum .detail-scene {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stage.to-epiphyllum .black-flower {
+  z-index: 8;
+  left: 8.35%;
+  top: 45.7%;
+  width: clamp(82px, 6.1vw, 120px);
+  opacity: var(--black-morph-opacity);
+  transform:
+    translate(-50%, -50%)
+    translate(var(--morph-x), var(--morph-y))
+    rotate(var(--morph-rotate))
+    scale(var(--morph-scale));
+}
+
+.stage.to-epiphyllum .epiphyllum-flower {
+  opacity: var(--epiphyllum-flower-opacity);
+}
+
+.stage.to-epiphyllum .epiphyllum-scene {
+  opacity: 1;
+  transform: translateY(calc((1 - var(--epiphyllum-progress)) * 105vh));
+  transition-duration: 0.58s;
+}
+
+.stage.epiphyllum .detail-scene,
+.stage.epiphyllum .black-flower {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.epiphyllum .epiphyllum-flower {
+  left: 8.35%;
+  top: 45.7%;
+  opacity: 1;
+  transform:
+    translate(-50%, -50%)
+    translate(82.35vw, 5.5vh)
+    rotate(0deg)
+    scale(1);
+  transition: opacity 0.18s ease;
+}
+
+.stage.epiphyllum .epiphyllum-scene {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.35s ease;
+}
+
+.stage.to-peony .detail-scene,
+.stage.to-peony .black-flower {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.to-peony .epiphyllum-flower {
+  left: 90.7%;
+  top: 51.2%;
+  opacity: var(--epiphyllum-to-peony-opacity);
+  transform:
+    translate(-50%, -50%)
+    translate(var(--peony-morph-x), var(--peony-morph-y))
+    rotate(var(--peony-morph-rotate))
+    scale(var(--peony-morph-scale));
+  transition: opacity 0.18s ease;
+}
+
+.stage.to-peony .peony-flower {
+  opacity: var(--peony-flower-opacity);
+}
+
+.stage.to-peony .epiphyllum-scene {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stage.to-peony .peony-scene {
+  opacity: 1;
+  transform: translateY(calc((1 - var(--peony-progress)) * 105vh));
+  transition-duration: 0.58s;
+}
+
+.stage.peony .detail-scene,
+.stage.peony .black-flower,
+.stage.peony .epiphyllum-flower,
+.stage.peony .epiphyllum-scene {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.peony .peony-flower {
+  left: 90.7%;
+  top: 51.2%;
+  opacity: 1;
+  transform:
+    translate(-50%, -50%)
+    translate(-40.7vw, -11.7vh)
+    rotate(0deg)
+    scale(1);
+}
+
+.stage.peony .peony-scene {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.35s ease;
+}
+
+.stage.to-rose .detail-scene,
+.stage.to-rose .black-flower,
+.stage.to-rose .epiphyllum-flower,
+.stage.to-rose .epiphyllum-scene {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.to-rose .peony-scene {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stage.to-rose .rose-scene {
+  opacity: 1;
+  transform: translateY(calc((1 - var(--rose-progress)) * 105vh));
+  transition-duration: 0.62s;
+}
+
+.stage.to-rose .peony-flower {
+  left: 90.7%;
+  top: 51.2%;
+  opacity: var(--peony-to-rose-opacity);
+  transform:
+    translate(-50%, -50%)
+    translate(-40.7vw, -11.7vh)
+    translate(var(--rose-morph-x), calc(var(--rose-morph-y) + var(--rose-morph-arc)))
+    rotate(var(--rose-morph-rotate))
+    scale(var(--rose-morph-scale));
+}
+
+.stage.to-rose .rose-flower {
+  opacity: var(--rose-flower-opacity);
+}
+
+.stage.rose .detail-scene,
+.stage.rose .black-flower,
+.stage.rose .epiphyllum-flower,
+.stage.rose .epiphyllum-scene,
+.stage.rose .peony-scene,
+.stage.rose .peony-flower {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.rose .rose-scene {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.35s ease;
+}
+
+.stage.rose .rose-flower {
+  left: 50%;
+  top: 39.5%;
+  opacity: 1;
+  transform:
+    translate(-50%, -50%)
+    translate(0, 51.5vh)
+    rotate(0deg)
+    scale(0.86);
+}
+
+.stage.to-dandelion .detail-scene,
+.stage.to-dandelion .black-flower,
+.stage.to-dandelion .epiphyllum-flower,
+.stage.to-dandelion .epiphyllum-scene,
+.stage.to-dandelion .peony-scene,
+.stage.to-dandelion .peony-flower {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.to-dandelion .rose-scene {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stage.to-dandelion .dandelion-scene {
+  opacity: 1;
+  transform: translateY(calc((1 - var(--dandelion-progress)) * 105vh));
+  transition-duration: 0.62s;
+}
+
+.stage.to-dandelion .rose-flower {
+  left: 50%;
+  top: 39.5%;
+  opacity: var(--rose-to-dandelion-opacity);
+  transform:
+    translate(-50%, -50%)
+    translate(0, 51.5vh)
+    translate(var(--dandelion-morph-x), calc(var(--dandelion-morph-y) + var(--dandelion-morph-arc)))
+    rotate(var(--dandelion-morph-rotate))
+    scale(var(--dandelion-morph-scale));
+}
+
+.stage.to-dandelion .dandelion-flower {
+  opacity: var(--dandelion-flower-opacity);
+}
+
+.stage.dandelion .detail-scene,
+.stage.dandelion .black-flower,
+.stage.dandelion .epiphyllum-flower,
+.stage.dandelion .epiphyllum-scene,
+.stage.dandelion .peony-scene,
+.stage.dandelion .peony-flower,
+.stage.dandelion .rose-scene,
+.stage.dandelion .rose-flower {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.dandelion .dandelion-scene {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.35s ease;
+}
+
+.stage.dandelion .dandelion-flower {
+  left: 50%;
+  top: 91%;
+  opacity: 1;
+  transform:
+    translate(-50%, -50%)
+    translate(38vw, -44.5vh)
+    rotate(0deg)
+    scale(0.82);
+}
+
+.stage.to-ending .detail-scene,
+.stage.to-ending .black-flower,
+.stage.to-ending .epiphyllum-flower,
+.stage.to-ending .epiphyllum-scene,
+.stage.to-ending .peony-scene,
+.stage.to-ending .peony-flower,
+.stage.to-ending .rose-scene,
+.stage.to-ending .rose-flower {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.to-ending .dandelion-scene {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stage.to-ending .ending-scene {
+  opacity: 1;
+  transform: translateY(calc((1 - var(--ending-progress)) * 105vh));
+  transition-duration: 0.66s;
+}
+
+.stage.to-ending .dandelion-flower {
+  left: 50%;
+  top: 91%;
+  opacity: calc(1 - var(--ending-progress));
+  transform:
+    translate(-50%, -50%)
+    translate(var(--ending-flower-x), var(--ending-flower-y))
+    rotate(var(--ending-flower-rotate))
+    scale(var(--ending-flower-scale));
+}
+
+.stage.ending .detail-scene,
+.stage.ending .black-flower,
+.stage.ending .epiphyllum-flower,
+.stage.ending .epiphyllum-scene,
+.stage.ending .peony-scene,
+.stage.ending .peony-flower,
+.stage.ending .rose-scene,
+.stage.ending .rose-flower,
+.stage.ending .dandelion-scene,
+.stage.ending .dandelion-flower {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage.ending .ending-scene {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity 0.35s ease;
+}
+
+.stage.revealed .background-layer {
+  animation: closeToCenter var(--fade-duration) cubic-bezier(0.55, 0, 0.2, 1) forwards;
+}
+
+.stage.revealed h1 {
+  animation: titleSweep var(--fade-duration) linear forwards;
+}
+
+body.is-revealed .top-nav {
+  animation: navSweep var(--fade-duration) linear forwards;
+}
+
+body.is-revealed .nav-link {
+  animation: navLinkSweep var(--fade-duration) linear forwards;
+}
+
+body.is-revealed .bottom-discover {
+  animation: bottomDiscoverSweep var(--fade-duration) linear forwards;
+}
+
+body.is-revealed .nav-link.is-active {
+  animation: navActiveSweep var(--fade-duration) linear forwards;
+}
+
+body.is-revealed .nav-link:hover,
+body.is-revealed .nav-link:focus-visible,
+body.is-revealed .nav-link.is-active {
+  color: rgba(0, 0, 0, 0.92);
+}
+
+body.is-epiphyllum .top-nav,
+body.is-epiphyllum-transition .top-nav,
+body.is-rose .top-nav,
+body.is-rose-transition .top-nav,
+body.is-ending .top-nav,
+body.is-ending-transition .top-nav {
+  color: rgba(255, 255, 255, 0.92);
+  animation: none !important;
+}
+
+body.is-epiphyllum .bottom-discover,
+body.is-epiphyllum-transition .bottom-discover,
+body.is-rose .bottom-discover,
+body.is-rose-transition .bottom-discover,
+body.is-ending .bottom-discover,
+body.is-ending-transition .bottom-discover {
+  color: rgba(255, 255, 255, 0.9);
+  animation: none !important;
+}
+
+body.is-epiphyllum .nav-link,
+body.is-epiphyllum-transition .nav-link,
+body.is-rose .nav-link,
+body.is-rose-transition .nav-link,
+body.is-ending .nav-link,
+body.is-ending-transition .nav-link {
+  color: rgba(255, 255, 255, 0.48);
+  animation: none !important;
+}
+
+body.is-epiphyllum .nav-link:hover,
+body.is-epiphyllum .nav-link:focus-visible,
+body.is-epiphyllum .nav-link.is-active,
+body.is-epiphyllum-transition .nav-link:hover,
+body.is-epiphyllum-transition .nav-link:focus-visible,
+body.is-epiphyllum-transition .nav-link.is-active,
+body.is-rose .nav-link:hover,
+body.is-rose .nav-link:focus-visible,
+body.is-rose .nav-link.is-active,
+body.is-rose-transition .nav-link:hover,
+body.is-rose-transition .nav-link:focus-visible,
+body.is-rose-transition .nav-link.is-active,
+body.is-ending .nav-link:hover,
+body.is-ending .nav-link:focus-visible,
+body.is-ending .nav-link.is-active,
+body.is-ending-transition .nav-link:hover,
+body.is-ending-transition .nav-link:focus-visible,
+body.is-ending-transition .nav-link.is-active {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+body.is-dandelion .top-nav,
+body.is-dandelion-transition .top-nav {
+  color: rgba(0, 0, 0, 0.92);
+}
+
+body.is-dandelion .nav-link,
+body.is-dandelion-transition .nav-link {
+  color: rgba(0, 0, 0, 0.42);
+}
+
+body.is-dandelion .nav-link:hover,
+body.is-dandelion .nav-link:focus-visible,
+body.is-dandelion .nav-link.is-active,
+body.is-dandelion-transition .nav-link:hover,
+body.is-dandelion-transition .nav-link:focus-visible,
+body.is-dandelion-transition .nav-link.is-active {
+  color: rgba(0, 0, 0, 0.92);
+}
+
+body.is-dandelion .bottom-discover,
+body.is-dandelion-transition .bottom-discover {
+  color: rgba(0, 0, 0, 0.42);
+}
+
+body.is-detail .top-nav,
+body.is-detail-transition .top-nav,
+body.is-peony .top-nav,
+body.is-peony-transition .top-nav,
+body.is-dandelion .top-nav,
+body.is-dandelion-transition .top-nav {
+  color: rgba(0, 0, 0, 0.92);
+  animation: none !important;
+}
+
+body.is-detail .nav-link,
+body.is-detail-transition .nav-link,
+body.is-peony .nav-link,
+body.is-peony-transition .nav-link,
+body.is-dandelion .nav-link,
+body.is-dandelion-transition .nav-link {
+  color: rgba(0, 0, 0, 0.42);
+  animation: none !important;
+}
+
+body.is-detail .nav-link:hover,
+body.is-detail .nav-link:focus-visible,
+body.is-detail .nav-link.is-active,
+body.is-detail-transition .nav-link:hover,
+body.is-detail-transition .nav-link:focus-visible,
+body.is-detail-transition .nav-link.is-active,
+body.is-peony .nav-link:hover,
+body.is-peony .nav-link:focus-visible,
+body.is-peony .nav-link.is-active,
+body.is-peony-transition .nav-link:hover,
+body.is-peony-transition .nav-link:focus-visible,
+body.is-peony-transition .nav-link.is-active,
+body.is-dandelion .nav-link:hover,
+body.is-dandelion .nav-link:focus-visible,
+body.is-dandelion .nav-link.is-active,
+body.is-dandelion-transition .nav-link:hover,
+body.is-dandelion-transition .nav-link:focus-visible,
+body.is-dandelion-transition .nav-link.is-active {
+  color: rgba(0, 0, 0, 0.92);
+}
+
+body.is-detail .bottom-discover,
+body.is-detail-transition .bottom-discover,
+body.is-peony .bottom-discover,
+body.is-peony-transition .bottom-discover,
+body.is-dandelion .bottom-discover,
+body.is-dandelion-transition .bottom-discover {
+  color: rgba(0, 0, 0, 0.42);
+  animation: none !important;
+}
+
+body.is-epiphyllum .top-nav,
+body.is-epiphyllum-transition .top-nav,
+body.is-rose .top-nav,
+body.is-rose-transition .top-nav,
+body.is-ending .top-nav,
+body.is-ending-transition .top-nav,
+body.is-epiphyllum .nav-logo,
+body.is-epiphyllum-transition .nav-logo,
+body.is-rose .nav-logo,
+body.is-rose-transition .nav-logo,
+body.is-ending .nav-logo,
+body.is-ending-transition .nav-logo {
+  color: rgba(255, 255, 255, 0.92);
+  animation: none !important;
+}
+
+body.is-epiphyllum .nav-link,
+body.is-epiphyllum-transition .nav-link,
+body.is-rose .nav-link,
+body.is-rose-transition .nav-link,
+body.is-ending .nav-link,
+body.is-ending-transition .nav-link {
+  color: rgba(255, 255, 255, 0.52);
+  animation: none !important;
+}
+
+body.is-epiphyllum .nav-link:hover,
+body.is-epiphyllum .nav-link:focus-visible,
+body.is-epiphyllum .nav-link.is-active,
+body.is-epiphyllum-transition .nav-link:hover,
+body.is-epiphyllum-transition .nav-link:focus-visible,
+body.is-epiphyllum-transition .nav-link.is-active,
+body.is-rose .nav-link:hover,
+body.is-rose .nav-link:focus-visible,
+body.is-rose .nav-link.is-active,
+body.is-rose-transition .nav-link:hover,
+body.is-rose-transition .nav-link:focus-visible,
+body.is-rose-transition .nav-link.is-active,
+body.is-ending .nav-link:hover,
+body.is-ending .nav-link:focus-visible,
+body.is-ending .nav-link.is-active,
+body.is-ending-transition .nav-link:hover,
+body.is-ending-transition .nav-link:focus-visible,
+body.is-ending-transition .nav-link.is-active {
+  color: rgba(255, 255, 255, 0.96);
+}
+
+body.is-epiphyllum .bottom-discover,
+body.is-epiphyllum-transition .bottom-discover,
+body.is-rose .bottom-discover,
+body.is-rose-transition .bottom-discover,
+body.is-ending .bottom-discover,
+body.is-ending-transition .bottom-discover {
+  color: rgba(255, 255, 255, 0.9);
+  animation: none !important;
+}
+
+body.is-epiphyllum .menu-button span,
+body.is-epiphyllum-transition .menu-button span,
+body.is-rose .menu-button span,
+body.is-rose-transition .menu-button span,
+body.is-ending .menu-button span,
+body.is-ending-transition .menu-button span {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+body.is-rose,
+body.is-rose-transition,
+body.is-ending,
+body.is-ending-transition {
+  --trail-flower-width: clamp(36px, 4.8vw, 88px);
+}
+
+body.is-dandelion,
+body.is-dandelion-transition {
+  --trail-flower-shadow: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.1));
+}
+
+.stage.revealed .ribbon-line {
+  animation: ribbonLayerIn 0.2s ease calc(var(--write-delay) + 1.4s) forwards;
+}
+
+.stage.revealed .script-title span {
+  animation: writeLetter 0.72s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: calc(var(--write-delay) + (var(--i) * 0.085s));
+}
+
+@keyframes closeToCenter {
+  0% {
+    clip-path: circle(66vmax at var(--flower-left) var(--flower-top));
+  }
+
+  38% {
+    clip-path: circle(42vmax at var(--flower-left) var(--flower-top));
+  }
+
+  100% {
+    clip-path: circle(0 at var(--flower-left) var(--flower-top));
+  }
+}
+
+@keyframes titleSweep {
+  0% {
+    color: rgba(255, 255, 255, 0.97);
+    text-shadow: 0 5px 24px rgba(0, 0, 0, 0.68);
+  }
+
+  62% {
+    color: rgba(255, 255, 255, 0.97);
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.28);
+  }
+
+  80% {
+    color: rgba(238, 238, 238, 0.72);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  100% {
+    color: rgba(0, 0, 0, 0.075);
+    text-shadow: none;
+  }
+}
+
+@keyframes navSweep {
+  0% {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  62% {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  80% {
+    color: rgba(80, 80, 80, 0.72);
+  }
+
+  100% {
+    color: rgba(10, 10, 10, 0.92);
+  }
+}
+
+@keyframes navLinkSweep {
+  0% {
+    color: rgba(255, 255, 255, 0.48);
+  }
+
+  62% {
+    color: rgba(255, 255, 255, 0.48);
+  }
+
+  80% {
+    color: rgba(94, 94, 94, 0.62);
+  }
+
+  100% {
+    color: rgba(0, 0, 0, 0.42);
+  }
+}
+
+@keyframes navActiveSweep {
+  0% {
+    color: rgba(255, 255, 255, 0.96);
+  }
+
+  62% {
+    color: rgba(255, 255, 255, 0.96);
+  }
+
+  80% {
+    color: rgba(54, 54, 54, 0.78);
+  }
+
+  100% {
+    color: rgba(0, 0, 0, 0.92);
+  }
+}
+
+@keyframes bottomDiscoverSweep {
+  0% {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  62% {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  100% {
+    color: rgba(0, 0, 0, 0.42);
+  }
+}
+
+@keyframes ribbonLayerIn {
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes writeLetter {
+  0% {
+    opacity: 0;
+    transform: translateX(-0.22em) translateY(0.05em);
+    filter: blur(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (max-aspect-ratio: 4 / 3) {
+  :root {
+    --flower-top: 68%;
+    --flower-width: clamp(66px, 18vw, 108px);
+  }
+
+  .background-layer {
+    clip-path: circle(88vmax at var(--flower-left) var(--flower-top));
+  }
+
+  .copy {
+    top: 48%;
+    width: 92vw;
+  }
+
+  .top-nav {
+    padding: 24px 26px;
+  }
+
+  .nav-links {
+    left: auto;
+    right: 26px;
+    width: auto;
+    min-width: 0;
+    transform: none;
+  }
+
+  .nav-link:not(.is-active),
+  .nav-link-plants {
+    display: none;
+  }
+
+  .nav-logo {
+    left: 26px;
+    top: 24px;
+  }
+
+  .bottom-discover {
+    left: 26px;
+    bottom: 24px;
+  }
+
+  .menu-button {
+    right: 26px;
+    bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(58px, 19vw, 128px);
+    gap: 0.07em;
+  }
+
+  h1 span:nth-child(4) {
+    margin-right: 0.14em;
+  }
+
+  .script-title {
+    font-size: clamp(38px, 12vw, 76px);
+    white-space: normal;
+  }
+
+  .detail-scene {
+    grid-template-columns: 1fr;
+    padding: 12vh 8vw 0;
+  }
+
+  .detail-video-wrap {
+    grid-column: 1;
+    width: min(70vw, 360px);
+    height: min(72vh, 620px);
+  }
+
+  .detail-text {
+    display: none;
+  }
+
+  .peony-scene {
+    padding: 0;
+  }
+
+  .peony-art {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .stage.detail .black-flower {
+    left: 14%;
+    top: 44%;
+    width: clamp(68px, 16vw, 110px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage.revealed .background-layer,
+  .stage.revealed .script-title span {
+    animation-duration: 0.01ms;
+    animation-delay: 0ms;
+  }
+
+  .cursor-trail {
+    display: none;
+  }
+}
